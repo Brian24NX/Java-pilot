@@ -54,6 +54,13 @@ public class MyInfo {
         reverse(arr3);
         printArray(arr3);
 
+        System.out.println("-------------------------------------------");
+
+        int first = 1;
+        int second = 2;
+        swap(first, second);
+
+
 
     }
 
@@ -86,6 +93,13 @@ public class MyInfo {
             }
         }
         System.out.println(" ]");
+    }
+
+    public static void swap(int a , int b) {
+        int temp = a;
+        a = b;
+        b = temp;
+        System.out.println("After swap: first = " + a + ", second = " + b);
     }
 
 }

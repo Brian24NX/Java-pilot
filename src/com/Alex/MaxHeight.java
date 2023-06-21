@@ -1,9 +1,6 @@
 package com.Alex;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class MaxHeight {
 
@@ -98,7 +95,6 @@ public class MaxHeight {
         double sumScore = getSumScore(arrScore);
         double finalScore = (sumScore - maxScore - minScore) / (arrScore.length - 2);
         System.out.println("The player's final score is: " + finalScore);
-
 
     }
 
