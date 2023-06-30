@@ -1,4 +1,4 @@
-package com.Brian;
+package com.Alex;
 
 public class StaticTest {
     private static int staticInt = 2;
