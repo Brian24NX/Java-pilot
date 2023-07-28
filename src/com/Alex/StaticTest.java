@@ -15,3 +15,9 @@ public class StaticTest {
         StaticTest test2 = new StaticTest();
     }
 }
+
+/*  staticInt = 3  random = 3
+    staticInt = 4  random = 3
+    static method shares the copy of object but non-static method not
+
+ */
