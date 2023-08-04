@@ -1,6 +1,7 @@
 package com.Alex;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author nxzhouj
@@ -140,15 +141,245 @@ public class MyInfo {
          Integer obj1 = abc;
          Double obj2 = xyz;
          */
-
         if (obj1 instanceof Integer) {
             System.out.println("An object of Integer is created. ");
         }
         if (obj2 instanceof Double) {
             System.out.println("An object of Double is created. ");
         }
+        System.out.println("-------------------------------------------");
+
+        // 上界通配符 <? extends T>
+        ArrayList<Integer> integerArrayList = new ArrayList<>();
+        integerArrayList.add(1);
+        integerArrayList.add(2);
+        printIntVal(integerArrayList);
+
+        ArrayList<Float> floatArrayList = new ArrayList<>();
+        floatArrayList.add((float) 1.0);
+        floatArrayList.add((float) 2.0);
+        printIntVal(floatArrayList);
+
+        // 下界通配符 <? super T>
+        ArrayList<Number> list = new ArrayList<>();
+        // 往集合中添加 Number 类及其子类对象
+        list.add(new Integer(1));
+        list.add(new Float(1.1));
+        // 调用 fillNumList() 方法，传入 ArrayList<Number> 集合
+        fillNumList(list);
+        System.out.println(list);
+        System.out.println("-------------------------------------------");
+
+        // Stream
+        List<Integer> list2 = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 11, 22, 33, 44, 55);
+        // 遍历输出符合条件的元素
+        list2.stream().filter(x -> x > 6).forEach(System.out::println);
+        // 匹配第一个
+        Optional<Integer> findFirst = list2.stream().filter(x -> x > 6).findFirst();
+        // 匹配任意（适用于并行流）
+        Optional<Integer> findAny = list2.parallelStream().filter(x -> x > 6).findAny();
+        // 是否包含符合特定条件的元素
+        boolean anyMatch = list2.stream().anyMatch(x -> x > 6);
+        System.out.println("Match the first number greater than 6：" + findFirst.get());
+        System.out.println("Match any number greater than 6：" + findAny.get());
+        System.out.println("If it exists the number greater than 6：" + anyMatch);
+        System.out.println("-------------------------------------------");
+
+        // WeakHashMap
+        WeakHashMap<String, Integer> myWeakHashMap = new WeakHashMap<>();
+        String theFirst = "First";
+        Integer one = 1;
+        String theSecond = "Second";
+        Integer two = 2;
+        myWeakHashMap.put(theFirst, one);
+        myWeakHashMap.put(theSecond, two);
+        theSecond = null;
+        System.gc();
+        System.out.println("WeakHashMap after garbage collection: " + myWeakHashMap);
+        System.out.println("-------------------------------------------");
+
+        // NavigableMap
+        NavigableMap<String, Integer> numbers1 = new TreeMap<>();
+        numbers1.put("Two", 2);
+        numbers1.put("One", 1);
+        numbers1.put("Three", 3);
+        System.out.println("NavigableMap: " + numbers1);
+        System.out.println("First Entry: " + numbers1.firstEntry());
+        System.out.println("Last Entry: " + numbers1.lastEntry());
+        System.out.println("Removed First Entry: " + numbers1.pollFirstEntry());
+        System.out.println("Removed Last Entry: " + numbers1.pollLastEntry());
+        System.out.println("-------------------------------------------");
+
+        // Creating a treemap with a customized comparator---Reverse order
+        TreeMap<String, Integer> numbers2 = new TreeMap<>(new CustomComparator());
+        numbers2.put("First", 1);
+        numbers2.put("Second", 2);
+        numbers2.put("Third", 3);
+        numbers2.put("Fourth", 4);
+        System.out.println("TreeMap: " + numbers2);
+        System.out.println("-------------------------------------------");
+
+        // ConcurrentHashMap
+        ConcurrentHashMap<String, Integer> numbers3 = new ConcurrentHashMap<>();
+        numbers3.put("One", 1);
+        numbers3.put("Two", 2);
+        numbers3.put("Three", 3);
+        System.out.println("ConcurrentHashMap: " + numbers3);
+        // forEach() without transformer function
+        numbers3.forEach(4, (k, v) -> System.out.println("key: " + k + " value: " + v));
+        // forEach() with transformer function
+        System.out.print("Values are ");
+        numbers3.forEach(4, (k, v) -> v, (v) -> System.out.print(v + ", "));
+        System.out.println("\n");
+        System.out.println("-------------------------------------------");
+
+        // HashSet
+        HashSet<Integer> primeNumbers = new HashSet<>();
+        primeNumbers.add(2);
+        primeNumbers.add(3);
+        primeNumbers.add(5);
+        System.out.println("HashSet1: " + primeNumbers);
+        HashSet<Integer> oddNumbers = new HashSet<>();
+        oddNumbers.add(1);
+        oddNumbers.add(3);
+        oddNumbers.add(5);
+        System.out.println("HashSet2: " + oddNumbers);
+        // Difference between HashSet1 and HashSet2
+        primeNumbers.removeAll(oddNumbers);
+        System.out.println("Difference : " + primeNumbers);
+        System.out.println("-------------------------------------------");
+
+        // Creating a tree set with a customized comparator
+        TreeSet<String> animals = new TreeSet<>(new CustomComparator2());
+        animals.add("Dog");
+        animals.add("Zebra");
+        animals.add("Cat");
+        animals.add("Horse");
+        System.out.println("TreeSet: " + animals);
+        System.out.println("-------------------------------------------");
+
+        // Creating an ArrayList
+        ArrayList<Integer> numbers4 = new ArrayList<>();
+        numbers4.add(1);
+        numbers4.add(2);
+        numbers4.add(3);
+        numbers4.add(2);
+        System.out.println("ArrayList1: " + numbers4);
+        // Using frequency to find out the most common element
+        int count = Collections.frequency(numbers4, 2);
+        System.out.println("Count of 2: " + count);
+        // Creating an ArrayList
+        ArrayList<Integer> newNumbers = new ArrayList<>();
+        newNumbers.add(5);
+        newNumbers.add(6);
+        System.out.println("ArrayList2: " + newNumbers);
+        // Using disjoint to check whether there exists some common elements
+        boolean value = (Collections.disjoint(numbers4, newNumbers));
+        System.out.println("Two lists are disjoint: " + value);
+        System.out.println("-------------------------------------------");
+
+        // Creating an ArrayList
+        ArrayList<Integer> numbers5 = new ArrayList<>();
+        numbers5.add(1);
+        numbers5.add(3);
+        numbers5.add(2);
+        System.out.println("ArrayList: " + numbers5);
+        // Creating an instance of Iterator
+        Iterator<Integer> iterate = numbers5.iterator();
+        // Using the next() method
+        int number = iterate.next();
+        System.out.println("Accessed Element: " + number);
+        // Using the remove() method
+        iterate.remove();
+        System.out.println("Removed Element: " + number);
+        System.out.print("Updated ArrayList: ");
+        // Using the hasNext() method
+        while (iterate.hasNext()) {
+            // Using the forEachRemaining() method
+            iterate.forEachRemaining((v) -> System.out.print(v + ", "));
+        }
+        System.out.println("\n");
+        System.out.println("-------------------------------------------");
+
+        // Reverse array
+        int[] arr1 = {10, 20, 30, 40, 50};
+        reverseArray(arr1, arr1.length);
+        System.out.println("-------------------------------------------");
+
+        // Arraycopy: extended to a large array
+        String[] names = new String[]{"A", "B", "C"};
+        String[] extended = new String[5];
+        System.arraycopy(names, 0, extended, 0, names.length);
+        extended[3] = "D";
+        extended[4] = "E";
+        for (String i : extended) {
+            System.out.print(i + ", ");
+        }
+        System.out.println("\n");
+        System.out.println("The names array: " + Arrays.toString(names));
+        System.out.println("The extended array: " + Arrays.toString(extended));
+        System.out.println("-------------------------------------------");
 
 
+    }
+
+    // Reverse array
+    static void reverseArray(int[] target, int length) {
+        int[] newArray = new int[length];
+        int newArrayLength = length; // !! Copy length used in the new array
+        for (int i = 0; i < length; i++) {
+            newArray[newArrayLength - 1] = target[i];
+            newArrayLength -= 1;
+        }
+        System.out.println("The reverse array is: \n");
+        // Input reverse array
+        for (int i = 0; i < length; i++) {
+            System.out.println(newArray[i]);
+        }
+    }
+
+
+    // Creating a comparator class
+    public static class CustomComparator2 implements Comparator<String> {
+        @Override
+        public int compare(String animal1, String animal2) {
+            int value = animal1.compareTo(animal2);
+            // elements are sorted in reverse order
+            if (value > 0) {
+                return -1;
+            } else if (value < 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public static class CustomComparator implements Comparator<String> {
+        @Override
+        public int compare(String number1, String number2) {
+            int value = number1.compareTo(number2);
+            // elements are sorted in reverse order
+            if (value > 0) {
+                return -1;
+            } else if (value < 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public static void fillNumList(ArrayList<? super Number> list) {
+        list.add(new Integer(0));
+        list.add(new Float(1.0));
+    }
+
+    public static void printIntVal(ArrayList<? extends Number> list) {
+        for (Number number : list) {
+            System.out.print(number.intValue() + " ");
+        }
+        System.out.println();
     }
 
     public static int getIndex(int[] arr2, int myTarget) {
