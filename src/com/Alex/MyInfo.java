@@ -41,13 +41,13 @@ public class MyInfo {
         System.out.println("Sum is " + sum);
         System.out.println("-------------------------------------------");
 
-        int[] arr2 = {19, 28, 37, 46, 50};
-
-        System.out.println("Please type in target number: ");
-        Scanner target = new Scanner(System.in);
-        int myTarget = target.nextInt();
-        int myIndex = getIndex(arr2, myTarget);
-        System.out.println("The target index is: " + myIndex);
+//        int[] arr2 = {19, 28, 37, 46, 50};
+//
+//        System.out.println("Please enter target number: ");
+//        Scanner target = new Scanner(System.in);
+//        int myTarget = target.nextInt();
+//        int myIndex = getIndex(arr2, myTarget);
+//        System.out.println("The target index is: " + myIndex);
 
         System.out.println("-------------------------------------------");
 
@@ -319,12 +319,49 @@ public class MyInfo {
         System.out.println("The names array: " + Arrays.toString(names));
         System.out.println("The extended array: " + Arrays.toString(extended));
         System.out.println("-------------------------------------------");
+        addItems("www");
+        int[] arrDuplicate = {1, 2, 3, 3, 3, 4, 5, 5, 6, 11, 11, 11, 23, 2, 2,};
+        findDuplicateNum(arrDuplicate);
+
+
+
+
 
 
     }
 
+    public static void findDuplicateNum(int [] arr) {
+        int count = 0;
+        for (int j = 0; j < arr.length; j++) {
+            for (int k = j + 1; k < arr.length; k++) {
+                if (arr[j] == arr[k]) {
+                    count++;
+                }
+            }
+            if (count==1){
+                System.out.println("Duplicated element is : " + arr[j]);
+            }
+            count = 0;
+        }
+
+
+
+    }
+
+
+
+
+
+    @SuppressWarnings("unchecked")
+    public static void addItems(String item){
+        @SuppressWarnings("rawtypes")
+        List items = new ArrayList();
+        items.add(item);
+        System.out.println("SuppressWarnings: " + items);
+    }
+
     // Reverse array
-    static void reverseArray(int[] target, int length) {
+    public static void reverseArray(int[] target, int length) {
         int[] newArray = new int[length];
         int newArrayLength = length; // !! Copy length used in the new array
         for (int i = 0; i < length; i++) {
